@@ -18,7 +18,7 @@ class App extends Component {
   }
 
   componentWillUpdate(nextProps){
-    this.steps = this.steps + (Object.keys(nextProps.arr[nextProps.count-1])) + " " + (Object.values(nextProps.arr[nextProps.count-1])) + " / ";
+    //this.steps = this.steps + (Object.keys(nextProps.arr[nextProps.count-1])) + " " + (Object.values(nextProps.arr[nextProps.count-1])) + " / ";
     return true;
   }
 
@@ -31,8 +31,8 @@ class App extends Component {
           <h1 className="App-title">Othello</h1>
         </header>
         <Board/>
-        <p>Button history </p>
-        <p>{this.steps} </p>
+        {/* <p>Button history </p>
+        <p>{this.steps} </p> */}
 
       </div>
     );

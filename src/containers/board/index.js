@@ -24,17 +24,24 @@ const Board = props => (
               size="small"
               id={c+"-"+r}
               onClick={(event)=> {props.clicked(event.target.id)}}
-            />
+              color={
+                props.arr[c][r] === true ? "primary":props.arr[c][r] === false ? "secondary" : " "
+              }
+            >
+            
+            </Button>
             )}
         </tr>
         )}
-      </Table>
-    }
+      </Table> 
+      }
+
   </div>
 );
 
 const mapStateToProps = state => ({
   count: state.reducer.count,
+  arr: state.reducer.arr
 });
 
 const mapDispatchToProps = (dispatch, arg) => {
