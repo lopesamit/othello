@@ -15,6 +15,12 @@ const initialState = {
 
   export default (state = initialState, action) => {
     
+    state.arr[3][3] = true;
+    state.arr[4][4] = true;
+    state.arr[3][4] = false;
+    state.arr[4][3] = false;
+
+
     if(action.arg){
       state.arr[action.arg.split('-')[0]][action.arg.split('-')[1]] = state.value;
       console.log(state.arr)
