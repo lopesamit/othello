@@ -4,10 +4,6 @@ import { get } from 'lodash';
 import logo from '../../logo.svg';
 import '../../App.css';
 import Board from '../board'
-import {
-  changed,
-
-} from '../../modules/reducer';
 
 
 class App extends Component {
@@ -25,7 +21,7 @@ class App extends Component {
   render() {
 
     return (
-      <div className="App">
+      <div className="App" >
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
           <h1 className="App-title">Othello</h1>
@@ -47,7 +43,6 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    changed: () => {dispatch (changed());},    
   };
 };
 

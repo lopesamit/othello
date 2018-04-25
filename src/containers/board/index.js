@@ -13,21 +13,42 @@ import {
 const Board = props => (
   <div>
     <p>Count: {props.count}</p>
+    <p>Next: {
+      <Button 
+        color={
+          props.value === true ? "primary" : "secondary" 
+        }
+        variant="raised"
+        size="small"
+      /> 
+      }
+    </p>
 
     
     { <Table>
-      { [0,1,2,3,4,5,6,7].map(r=>
+      { [0,1,2,3,4,5,6,7].map(c=>
         <tr>
-          { [0,1,2,3,4,5,6,7].map(c=>
+          { [0,1,2,3,4,5,6,7].map(r=>
             <Button
               variant="raised"
               size="small"
               id={c+"-"+r}
-              onClick={(event)=> { props.arr[c][r] !== undefined ? " " : props.clicked(event.target.id)}}
+              onClick={(event) => {
+                console.log("clicked------  "+r + " " + c); 
+                //check if one button is pressed again. don't allow
+                props.arr[c][r] !== undefined ? " " : (
+                    //check if there is a block next to the clicked block, if yes then allow the click.
+
+                    props.clicked(event.target.id)
+                  )
+                }
+              }
               color={
                 props.arr[c][r] === true ? "primary":props.arr[c][r] === false ? "secondary" : " "
               }
-            />
+            >
+            {/* {r + " " + c} */}
+            </Button>
             )}
         </tr>
         )}
@@ -38,7 +59,8 @@ const Board = props => (
 
 const mapStateToProps = state => ({
   count: state.reducer.count,
-  arr: state.reducer.arr
+  arr: state.reducer.arr,
+  value: state.reducer.value
 });
 
 const mapDispatchToProps = (dispatch, arg) => {

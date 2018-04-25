@@ -1,29 +1,65 @@
 export const CLICKED = 'CLICKED';
-export const CHANGED = 'CHANGED';
 
 const x = new Array(8);
 for (var i = 0; i < 8; i++) {
   x[i] = new Array(8);
 }
+    x[3][3] = true;
+    x[4][4] = true;
+    x[3][4] = false;
+    x[4][3] = false;
 
 const initialState = {
     count: 0,
     value: true,
     isClicked: false,
-    arr : x
+    arr : x,
   };
 
   export default (state = initialState, action) => {
-    
-    state.arr[3][3] = true;
-    state.arr[4][4] = true;
-    state.arr[3][4] = false;
-    state.arr[4][3] = false;
-
 
     if(action.arg){
-      state.arr[action.arg.split('-')[0]][action.arg.split('-')[1]] = state.value;
-      console.log(state.arr)
+      var co = action.arg.split('-')
+      state.arr[co[0]][co[1]] = state.value;
+
+
+      for(var i = Number(co[0])+1 ; i < 8 ; i++ ){
+
+        //if pink is below blue, both will be blue
+        if(state.arr[i][co[1]] === false){
+          if(state.arr[i][co[1]] === undefined){ break; }
+          state.arr[i][co[1]] = true;
+          console.log(i+" in  " + state.arr[i][co[1]])
+
+          break;
+  
+        }
+
+
+        //if blue is below pink both will be pink
+        if(state.arr[i][co[1]] === true){
+          state.arr[i][co[1]] = false;
+          console.log(i+" in  " + state.arr[co[0]][co[1]])
+
+          break
+  
+        }
+
+      }
+
+
+      var count=0;
+      if(state.arr.forEach(c=>{
+        c.forEach(r=>{
+          if(r||c){count++}
+        })
+      }));
+      if(count===64){
+        console.log("game over");
+        alert("Game Over");
+      }
+       
+
     }
     switch (action.type) {
       case CLICKED:
@@ -34,12 +70,6 @@ const initialState = {
         count: state.count + 1,
         arr: state.arr
       };
-
-      case CHANGED:
-      return {
-        //someway change the Board by passing the co-ordinates of the clicked button
-
-      }
 
       default:
       return state;
@@ -58,13 +88,4 @@ export const clicked = (arg) => {
   };
 };
 
-export const changed = (arg) => {
-  return dispatch => {
 
-    dispatch({
-      type: CHANGED,
-      arg: arg
-    });
-    
-  };
-};
