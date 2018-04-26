@@ -22,8 +22,11 @@ const initialState = {
       var co = action.arg.split('-')
       state.arr[co[0]][co[1]] = state.value;
 
+      //when the clicked tab is blue
       if(state.arr[co[0]][co[1]] === true){
-        var downY = Number(co[0])+1;
+
+        // vertically down checking
+        let downY = Number(co[0])+1;
         let count = 0;
         for(let i = downY; i<8;i++){
           if(state.arr[i][co[1]] === true){ 
@@ -34,99 +37,179 @@ const initialState = {
             count++;
           }
         }
-        console.log(count);
 
         if(count>0){
-          console.log(downY+count)
           for(let j = 0; j<count;j++){
             if(state.arr[downY+count][co[1]] === true){
-              state.arr[downY+j][co[1]]=true;
+              state.arr[downY+j][co[1]] = true;
             }
           }
         }
-      }
 
-      // if(state.arr[co[0]][co[1]] === true){
-
-      //   //any pink blocks between blue blocks downwards will turn blue
-      //   var downY = Number(co[0])+1;
-      //   for(var i = downY ; i <= 8-downY ; i++ ){
-      //     //if pink is below blue, both will be blue
-      //     if(state.arr[i][co[1]] === undefined){ 
-      //       break; 
-      //     } else if(state.arr[i][co[1]] === true) {
-      //       break; 
-      //     } else if(state.arr[i][co[1]] === false) {
-
-      //       for(let j = i+1; j<8; j++){
-
-      //         if(state.arr[j][co[1]] === true){
-      //           state.arr[j-1][co[1]] = true;
-      //           console.log(j+"  hi")
-      //         }
-      //         else break;
-      //       }
-
-
-      //       // state.arr[i][co[1]] = true;
-      //       // console.log(i+" "+co[1]+" in  " + state.arr[i][co[1]])
-            
-      //       if(state.arr[i+1][co[1]] === undefined){
-      //         console.log(i+" "+co[1])
-      //         for(let j = i; j> co[0]; j--){
-      //           state.arr[j][co[1]] = false;
-      //           console.log(j+" "+co[1] + " converting false")
-      //         }
-      //         break;
-      //       }
-
-            
-      //     }
-      //   }
-
+        // vertically up checking
         
+        let upY = Number(co[0])-1;
+        let countUp = 0;
+        for(let i = upY; i>0;i--){
+          if(state.arr[i][co[1]] === true){ 
+            break;
+          } else if(state.arr[i][co[1]] === undefined){ 
+            break;
+          } else if(state.arr[i][co[1]] === false && i>0){ 
+            countUp++;
+          }
+        }
+        //console.log(countUp);
 
-      // }
+        if(countUp>0){
+          //console.log(upY+countUp)
+          for(let j = 0; j<countUp;j++){
+            if(state.arr[upY-countUp][co[1]] === true){
+              state.arr[upY-j][co[1]] = true;
+            }
+          }
+        }
 
+        // horizontally right checking
+        let rightY = Number(co[1])+1;
+        let rCount = 0;
+        for(let i = rightY; i<8;i++){
+          if(state.arr[co[0]][i] === true){ 
+            break;
+          } else if(state.arr[co[0]][i] === undefined){ 
+            break;
+          } else if(state.arr[co[0]][i] === false && i<7){ 
+            console.log(co[0]+" "+i)
+            rCount++;
+          }
+        }
+
+        if(rCount>0){
+          for(let j = 0; j<rCount;j++){
+            if(state.arr[co[0]][rightY+rCount] === true){
+              state.arr[co[0]][rightY+j] = true;
+            }
+          }
+        }
+
+        // horizontally left checking
+        let leftY = Number(co[1])-1;
+        let lCount = 0;
+        for(let i = leftY; i>0;i--){
+          if(state.arr[co[0]][i] === true){ 
+            break;
+          } else if(state.arr[co[0]][i] === undefined){ 
+            break;
+          } else if(state.arr[co[0]][i] === false && i>0){ 
+            lCount++;
+          }
+        }
+
+        if(lCount>0){
+          for(let j = 0; j<lCount;j++){
+            if(state.arr[co[0]][leftY-lCount] === true){
+              state.arr[co[0]][leftY-j] = true;
+            }
+          }
+        }
+
+      }
+
+      // --------------------------------------------------------------- //
+      //when the clicked tab is pink
       if(state.arr[co[0]][co[1]] === false){
-        //console.log("false");
+
+        // vertically down checking
+        let downY = Number(co[0])+1;
+        let count = 0;
+        for(let i = downY; i<8;i++){
+          if(state.arr[i][co[1]] === false){ 
+            break;
+          } else if(state.arr[i][co[1]] === undefined){ 
+            break;
+          } else if(state.arr[i][co[1]] === true && i<7){ 
+            count++;
+          }
+        }
+
+        if(count>0){
+          for(let j = 0; j<count;j++){
+            if(state.arr[downY+count][co[1]] === false){
+              state.arr[downY+j][co[1]] = false;
+            }
+          }
+        }
+
+        // vertically up checking
+        let upY = Number(co[0])-1;
+        let countUp = 0;
+        for(let i = upY; i>0;i--){
+          if(state.arr[i][co[1]] === false){ 
+            break;
+          } else if(state.arr[i][co[1]] === undefined){ 
+            break;
+          } else if(state.arr[i][co[1]] === true && i>0){ 
+            countUp++;
+          }
+        }
+        console.log(countUp);
+
+        if(countUp>0){
+          console.log(upY+countUp)
+          for(let j = 0; j<countUp;j++){
+            if(state.arr[upY-countUp][co[1]] === false){
+              state.arr[upY-j][co[1]] = false;
+            }
+          }
+        }
+
+        // horizontally right checking
+        let rightY = Number(co[1])+1;
+        let rCount = 0;
+        for(let i = rightY; i<8;i++){
+          if(state.arr[co[0]][i] === false){ 
+            break;
+          } else if(state.arr[co[0]][i] === undefined){ 
+            break;
+          } else if(state.arr[co[0]][i] === true && i<7){ 
+            console.log(co[0]+" "+i)
+            rCount++;
+          }
+        }
+
+        if(rCount>0){
+          for(let j = 0; j<rCount;j++){
+            if(state.arr[co[0]][rightY+rCount] === false){
+              state.arr[co[0]][rightY+j] = false;
+            }
+          }
+        }
+
+        // horizontally left checking
+        let leftY = Number(co[1])-1;
+        let lCount = 0;
+        for(let i = leftY; i>0;i--){
+          if(state.arr[co[0]][i] === false){ 
+            break;
+          } else if(state.arr[co[0]][i] === undefined){ 
+            break;
+          } else if(state.arr[co[0]][i] === true && i>0){ 
+            lCount++;
+          }
+        }
+
+        if(lCount>0){
+          for(let j = 0; j<lCount;j++){
+            if(state.arr[co[0]][leftY-lCount] === false){
+              state.arr[co[0]][leftY-j] = false;
+            }
+          }
+        }
+
       }
 
 
-      // Important code
-
-      // var downY = Number(co[0])+1;
-      // var count = 0;
-
-      // for(var i = downY ; i <= 8-downY ; i++ ){
-
-      //   //if pink is below blue, both will be blue
-      //   if(state.arr[i][co[1]] === false){
-      //     //if(state.arr[i][co[1]] === undefined){ console.log(i); break; }
-      //     state.arr[i][co[1]] = true;
-      //     count++;
-      //     console.log(i+" in  " + state.arr[i][co[1]])
-      //     console.log("count "+count)
-
-      //     break;
-  
-      //   }
-
-
-      //   //if blue is below pink both will be pink
-      //   if(state.arr[i][co[1]] === true){
-      //     state.arr[i][co[1]] = false;
-      //     console.log(i+" in  " + state.arr[co[0]][co[1]])
-
-      //     break
-  
-      //   }
-
-
-      // }
-
-
-      var count=0;
+      let count=0;
       if(state.arr.forEach(c=>{
         c.forEach(r=>{
           if(r||c){count++}
