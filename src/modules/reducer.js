@@ -22,30 +22,108 @@ const initialState = {
       var co = action.arg.split('-')
       state.arr[co[0]][co[1]] = state.value;
 
-
-      for(var i = Number(co[0])+1 ; i < 8 ; i++ ){
-
-        //if pink is below blue, both will be blue
-        if(state.arr[i][co[1]] === false){
-          if(state.arr[i][co[1]] === undefined){ break; }
-          state.arr[i][co[1]] = true;
-          console.log(i+" in  " + state.arr[i][co[1]])
-
-          break;
-  
+      if(state.arr[co[0]][co[1]] === true){
+        var downY = Number(co[0])+1;
+        let count = 0;
+        for(let i = downY; i<8;i++){
+          if(state.arr[i][co[1]] === true){ 
+            break;
+          } else if(state.arr[i][co[1]] === undefined){ 
+            break;
+          } else if(state.arr[i][co[1]] === false && i<7){ 
+            count++;
+          }
         }
+        console.log(count);
 
-
-        //if blue is below pink both will be pink
-        if(state.arr[i][co[1]] === true){
-          state.arr[i][co[1]] = false;
-          console.log(i+" in  " + state.arr[co[0]][co[1]])
-
-          break
-  
+        if(count>0){
+          console.log(downY+count)
+          for(let j = 0; j<count;j++){
+            if(state.arr[downY+count][co[1]] === true){
+              state.arr[downY+j][co[1]]=true;
+            }
+          }
         }
-
       }
+
+      // if(state.arr[co[0]][co[1]] === true){
+
+      //   //any pink blocks between blue blocks downwards will turn blue
+      //   var downY = Number(co[0])+1;
+      //   for(var i = downY ; i <= 8-downY ; i++ ){
+      //     //if pink is below blue, both will be blue
+      //     if(state.arr[i][co[1]] === undefined){ 
+      //       break; 
+      //     } else if(state.arr[i][co[1]] === true) {
+      //       break; 
+      //     } else if(state.arr[i][co[1]] === false) {
+
+      //       for(let j = i+1; j<8; j++){
+
+      //         if(state.arr[j][co[1]] === true){
+      //           state.arr[j-1][co[1]] = true;
+      //           console.log(j+"  hi")
+      //         }
+      //         else break;
+      //       }
+
+
+      //       // state.arr[i][co[1]] = true;
+      //       // console.log(i+" "+co[1]+" in  " + state.arr[i][co[1]])
+            
+      //       if(state.arr[i+1][co[1]] === undefined){
+      //         console.log(i+" "+co[1])
+      //         for(let j = i; j> co[0]; j--){
+      //           state.arr[j][co[1]] = false;
+      //           console.log(j+" "+co[1] + " converting false")
+      //         }
+      //         break;
+      //       }
+
+            
+      //     }
+      //   }
+
+        
+
+      // }
+
+      if(state.arr[co[0]][co[1]] === false){
+        //console.log("false");
+      }
+
+
+      // Important code
+
+      // var downY = Number(co[0])+1;
+      // var count = 0;
+
+      // for(var i = downY ; i <= 8-downY ; i++ ){
+
+      //   //if pink is below blue, both will be blue
+      //   if(state.arr[i][co[1]] === false){
+      //     //if(state.arr[i][co[1]] === undefined){ console.log(i); break; }
+      //     state.arr[i][co[1]] = true;
+      //     count++;
+      //     console.log(i+" in  " + state.arr[i][co[1]])
+      //     console.log("count "+count)
+
+      //     break;
+  
+      //   }
+
+
+      //   //if blue is below pink both will be pink
+      //   if(state.arr[i][co[1]] === true){
+      //     state.arr[i][co[1]] = false;
+      //     console.log(i+" in  " + state.arr[co[0]][co[1]])
+
+      //     break
+  
+      //   }
+
+
+      // }
 
 
       var count=0;

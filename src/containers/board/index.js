@@ -34,7 +34,7 @@ const Board = props => (
               size="small"
               id={c+"-"+r}
               onClick={(event) => {
-                console.log("clicked------  "+r + " " + c); 
+                console.log("client board------  "+c + " " + r); 
                 //check if one button is pressed again. don't allow
                 props.arr[c][r] !== undefined ? " " : (
                     //check if there is a block next to the clicked block, if yes then allow the click.
