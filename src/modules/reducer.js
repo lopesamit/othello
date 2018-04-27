@@ -14,6 +14,9 @@ const initialState = {
     value: true,
     isClicked: false,
     arr : x,
+    moved: true,
+    countT: 2,
+    countF: 2
   };
 
   export default (state = initialState, action) => {
@@ -27,20 +30,20 @@ const initialState = {
 
         // vertically down checking
         let downY = Number(co[0])+1;
-        let count = 0;
+        let countD = 0;
         for(let i = downY; i<8;i++){
           if(state.arr[i][co[1]] === true){ 
             break;
           } else if(state.arr[i][co[1]] === undefined){ 
             break;
           } else if(state.arr[i][co[1]] === false && i<7){ 
-            count++;
+            countD++;
           }
         }
 
-        if(count>0){
-          for(let j = 0; j<count;j++){
-            if(state.arr[downY+count][co[1]] === true){
+        if(countD>0){
+          for(let j = 0; j<countD;j++){
+            if(state.arr[downY+countD][co[1]] === true){
               state.arr[downY+j][co[1]] = true;
             }
           }
@@ -212,6 +215,11 @@ const initialState = {
           }
         }
 
+        if(countD && countUp && countDL && countDR && countUL && countUR && rCount && lCount){
+          state.moved = true;
+        } else {
+          state.moved = false;
+        }
 
 
       }
@@ -222,20 +230,20 @@ const initialState = {
 
         // vertically down checking
         let downY = Number(co[0])+1;
-        let count = 0;
+        let countD = 0;
         for(let i = downY; i<8;i++){
           if(state.arr[i][co[1]] === false){ 
             break;
           } else if(state.arr[i][co[1]] === undefined){ 
             break;
           } else if(state.arr[i][co[1]] === true && i<7){ 
-            count++;
+            countD++;
           }
         }
 
-        if(count>0){
-          for(let j = 0; j<count;j++){
-            if(state.arr[downY+count][co[1]] === false){
+        if(countD>0){
+          for(let j = 0; j<countD;j++){
+            if(state.arr[downY+countD][co[1]] === false){
               state.arr[downY+j][co[1]] = false;
             }
           }
@@ -324,7 +332,7 @@ const initialState = {
             countDL++;
           }
         }
-        console.log(countDL);
+        //console.log(countDL);
         if(countDL>0){
           for(let j = 1; j<=countDL;j++){
             if(state.arr[Number(co[0])+countDL+1][Number(co[1])-countDL-1] === false){
@@ -389,7 +397,7 @@ const initialState = {
         // diagonal down checking. click up and it will check for all diagonal blocks upwards to left /
         let countUL = 0;
         for(let i = 1; i<7;i++){
-          if(Number(co[0])-i < 1 || Number(co[1])-i >6 ){ console.log("breaked "); break; }
+          if(Number(co[0])-i < 1 || Number(co[1])-i >6 ){ break; }
           if(state.arr[Number(co[0])-i][Number(co[1])+i] === false){ 
             //console.log((Number(co[0])-i)+" " +(Number(co[1])+i)+ " break true")
             break;
@@ -411,17 +419,30 @@ const initialState = {
           }
         }
 
+        if(countD && countUp && countDL && countDR && countUL && countUR && rCount && lCount){
+          state.moved = true;
+        } else {
+          state.moved = false;
+        }
+
 
 
       }
 
 
-      let count=0;
+      let count=0, countT=0, countF=0;
       if(state.arr.forEach(c=>{
         c.forEach(r=>{
-          if(r||c){count++}
+          if(r||c){
+            count++;
+            if(r===true) {countT++}
+            else if(r===false) {countF++}
+          }
         })
+        state.countT = countT;
+        state.countF = countF;
       }));
+      
       if(count===64){
         alert("Game Over");
       }
@@ -435,7 +456,7 @@ const initialState = {
         isClicked: true,
         value: !state.value,
         count: state.count + 1,
-        arr: state.arr
+        arr: state.arr,
       };
 
       default:

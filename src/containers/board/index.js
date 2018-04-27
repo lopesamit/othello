@@ -12,7 +12,7 @@ import {
 
 const Board = props => (
   <div>
-    <p>Count: {props.count}</p>
+    <p>Blue : {props.countT} Pink : {props.countF}</p>
     <p>Next: {
       <Button 
         color={
@@ -43,6 +43,8 @@ const Board = props => (
                   )
                 }
               }
+              onMouseOver={(event) => ""}
+
               color={
                 props.arr[c][r] === true ? "primary":props.arr[c][r] === false ? "secondary" : " "
               }
@@ -60,7 +62,10 @@ const Board = props => (
 const mapStateToProps = state => ({
   count: state.reducer.count,
   arr: state.reducer.arr,
-  value: state.reducer.value
+  value: state.reducer.value,
+  moved: state.reducer.moved,
+  countT: state.reducer.countT,
+  countF: state.reducer.countF,
 });
 
 const mapDispatchToProps = (dispatch, arg) => {
